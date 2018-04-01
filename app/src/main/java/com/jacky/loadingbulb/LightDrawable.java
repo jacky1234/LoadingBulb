@@ -56,7 +56,7 @@ public class LightDrawable extends Drawable {
 
         lightPaint.setColor(Color.RED);
         lightPaint.setStyle(Paint.Style.STROKE);
-        lightPaint.setStrokeWidth(10);
+        lightPaint.setStrokeWidth(20);
 
         final Rect bounds = getBounds();
         radius = (int) (bounds.width() * 1.0f / 4);
@@ -74,6 +74,7 @@ public class LightDrawable extends Drawable {
         //draw white arc
         final RectF WhiteRectF = new RectF(rectF);
         WhiteRectF.inset(getWhiteArcPadding(), getWhiteArcPadding());
+        whitePaint.setStrokeCap(Paint.Cap.ROUND);
         canvas.drawArc(WhiteRectF, -70, 50, false, whitePaint);
 
         //2 draw bottom of bulb
@@ -106,15 +107,17 @@ public class LightDrawable extends Drawable {
         canvas.restore();
 
         //draw light
-        final float strokeWidth = lightPaint.getStrokeWidth();
-        final RectF light = new RectF(radius + radius * 0.25f + radius * 0.5f * progress, -strokeWidth / 2, radius + radius * 0.75f, strokeWidth / 2);
+        lightPaint.setStrokeCap(Paint.Cap.ROUND);
+//        final float strokeWidth = lightPaint.getStrokeWidth();
+//        final RectF light = new RectF(radius + radius * 0.25f + radius * 0.5f * progress, -strokeWidth / 2, radius + radius * 0.75f, strokeWidth / 2);
         final int save = canvas.save();
         canvas.translate(centerX, centerY);
         canvas.rotate(210);
         for (int i = 0; i < 5; i++) {
             canvas.save();
             canvas.rotate(i * 30);
-            canvas.drawRoundRect(light, 10, 10, lightPaint);
+//            canvas.drawRoundRect(light, 10, 10, lightPaint);
+            canvas.drawLine(radius + radius * 0.25f + radius * 0.5f * progress, 0, radius + radius * 0.75f, 0, lightPaint);
             canvas.restore();
         }
         canvas.restoreToCount(save);
